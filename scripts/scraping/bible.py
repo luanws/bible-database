@@ -90,7 +90,8 @@ for chapter in all_chapters:
             'span', attrs={'data-usfm': f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'})
         if verse_span is None:
             break
-        verse_text = ''.join([v.text for v in verse_span.contents[1:]])
+        content_verse_spans = verse_span.find_all('span', attrs={'class': 'content'})
+        verse_text = ''.join([v.text for v in content_verse_spans])
         verse = Verse(chapter, verse_number, verse_text)
         print(verse_text)
         verses.append(verse)
