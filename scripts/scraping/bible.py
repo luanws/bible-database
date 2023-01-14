@@ -4,8 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 
 base_url = 'https://www.bible.com/bible'
-version_id = '1608'
-version_name = 'ARA'
+version_name = input('Version name: ') # Example: 'ARA'
+version_id = input('Version ID: ') # Example: '1608'
 book_chapters = {
     'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,
     'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,
