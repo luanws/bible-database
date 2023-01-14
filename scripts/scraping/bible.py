@@ -85,12 +85,14 @@ for chapter in all_chapters:
     soup = get_soup_from_chapter_url(chapter_url)
 
     for verse_number in range(1, 1000):
-        print(f'GEN.{chapter.chapter_number}.{verse_number}')
-        verse_span = soup.find('span', attrs={'data-usfm': f'GEN.{chapter.chapter_number}.{verse_number}'})
+        print(f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}')
+        verse_span = soup.find(
+            'span', attrs={'data-usfm': f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'})
         if verse_span is None:
             break
-        verse_text = verse_span.contents[1].text
+        verse_text = ''.join([v.text for v in verse_span.contents[1:]])
         verse = Verse(chapter, verse_number, verse_text)
+        print(verse_text)
         verses.append(verse)
 
 save_verses_in_json(f'data/json/{version_name}.json', verses)
