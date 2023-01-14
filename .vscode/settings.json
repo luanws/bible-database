@@ -11,5 +11,8 @@
         "**/Thumbs.db": true,
         "**/__pycache": true,
         ".mypy_cache": true,
-    }
+    },
+    "cSpell.words": [
+        "pymenu"
+    ]
 }
