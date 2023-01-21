@@ -64,8 +64,8 @@ def make_chapter_url(chapter: Chapter) -> str:
     return f'{base_url}/{chapter.version_id}/{book_id}.{chapter.chapter_number}.{chapter.version_name}'
 
 
-def get_soup_from_chapter_url(chapter_url: str) -> BeautifulSoup:
-    response = requests.get(chapter_url)
+def get_soup_from_url(url: str) -> BeautifulSoup:
+    response = requests.get(url)
     return BeautifulSoup(response.text, 'html.parser')
 
 
@@ -93,8 +93,7 @@ def get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version
 
 
 def scrape_version_id(versions_url: str, version_name: str) -> str:
-    response = requests.get(versions_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = get_soup_from_url(versions_url)
     version_a = soup.find('a', text=re.compile(f'\\({version_name}\\)'))
     href = version_a['href']
     search = re.search(r'/versions/(\d+)-', href)
@@ -104,13 +103,32 @@ def scrape_version_id(versions_url: str, version_name: str) -> str:
     return version_id
 
 
+def scrape_chapter(chapter: Chapter, chapter_url: str) -> list[Verse]:
+    soup = get_soup_from_url(chapter_url)
+    verses: list[Verse] = []
+    for verse_number in count(1):
+        verse_reference = f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'
+        verse_spans = soup.find_all('span', attrs={'data-usfm': verse_reference})
+        if not verse_spans:
+            break
+        partial_verse_texts: list[str] = []
+        for verse_span in verse_spans:
+            content_verse_spans = verse_span.find_all('span', attrs={'class': 'content'})
+            partial_verse_text = ''.join([v.text for v in content_verse_spans])
+            partial_verse_texts.append(partial_verse_text)
+        verse_text = ' '.join(partial_verse_texts)
+        verse = Verse(chapter, verse_number, verse_text)
+        verses.append(verse)
+    return verses
+
+
 try:
     version_id = scrape_version_id(versions_url, version_name)
 except Exception as e:
     print(f'Version {version_name} not found. Please insert the version ID manually.')
     version_id = input('Version ID: ')
-
 print(f'Version ID: {version_id}')
+
 all_chapters = get_all_chapters(book_ids, book_chapters, version_id, version_name)
 print(f'{len(all_chapters)} chapters generated')
 
@@ -118,18 +136,8 @@ verses: list[Verse] = []
 for chapter in all_chapters:
     chapter_url = make_chapter_url(chapter)
     print(f'Getting {chapter_url}')
-    soup = get_soup_from_chapter_url(chapter_url)
-
-    for verse_number in count(1):
-        print(f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}')
-        verse_span = soup.find(
-            'span', attrs={'data-usfm': f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'})
-        if verse_span is None:
-            break
-        content_verse_spans = verse_span.find_all('span', attrs={'class': 'content'})
-        verse_text = ''.join([v.text for v in content_verse_spans])
-        verse = Verse(chapter, verse_number, verse_text)
-        print(verse_text)
-        verses.append(verse)
+    chapter_verses = scrape_chapter(chapter, chapter_url)
+    print(f'Scraped {chapter.book_id} {chapter.chapter_number}:1-{len(chapter_verses)}')
+    verses.extend(chapter_verses)
 
 save_verses_in_json(f'data/json/{language}/{version_name}.json', verses)
