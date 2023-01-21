@@ -1,3 +1,4 @@
+import codecs
 import json
 import os
 import re
@@ -77,7 +78,8 @@ def save_verses_in_json(filename: str, verses: list[Verse]):
     create_directory_if_not_exists(os.path.dirname(filename))
     verses_json = json.dumps([verse.__dict__() for verse in verses])
     with open(filename, 'w', encoding='utf-8') as f:
-        f.write(verses_json)
+        content = codecs.decode(verses_json, 'unicode_escape')
+        f.write(content)
 
 
 def get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version_id: str, version_name: str) -> list[Chapter]:
