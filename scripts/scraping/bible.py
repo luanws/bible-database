@@ -1,11 +1,15 @@
 import json
+import os
+import re
+from itertools import count
 
 import requests
 from bs4 import BeautifulSoup
 
 base_url = 'https://www.bible.com/bible'
-version_name = input('Version name: ') # Example: 'ARA'
-version_id = input('Version ID: ') # Example: '1608'
+versions_url = 'https://www.bible.com/versions'
+language = input('Language: ')  # Example: en
+version_name = input('Version name: ')  # Example: 'ARA'
 book_chapters = {
     'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,
     'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,
@@ -23,22 +27,16 @@ book_ids = list(book_chapters.keys())
 
 
 class Chapter:
-    def __init__(self, version_id: str, version_name: str, book_index: int, chapter_index: int):
+    def __init__(self, version_id: str, version_name: str, book_index: int, chapter_index: int, book_id: str):
         self.version_id = version_id
         self.version_name = version_name
         self.book_index = book_index
         self.chapter_index = chapter_index
+        self.book_id = book_id
 
     @property
     def chapter_number(self) -> int:
         return self.chapter_index + 1
-
-    @property
-    def book_id(self) -> str:
-        return book_ids[self.book_index]
-
-    def make_url(self) -> str:
-        return f'{base_url}/{self.version_id}/{self.book_id}.{self.chapter_number}.{self.version_name}'
 
 
 class Verse:
@@ -56,10 +54,13 @@ class Verse:
         }
 
 
-def make_chapter_url(version_id: str, version_name: str, book_index: int, chapter_index: int) -> str:
-    book = book_ids[book_index]
-    chapter = chapter_index + 1
-    return f'{base_url}/{version_id}/{book}.{chapter}.{version_name}'
+def get_book_id_from_chapter(chapter: Chapter) -> str:
+    return book_ids[chapter.book_index]
+
+
+def make_chapter_url(chapter: Chapter) -> str:
+    book_id = get_book_id_from_chapter(chapter)
+    return f'{base_url}/{chapter.version_id}/{book_id}.{chapter.chapter_number}.{chapter.version_name}'
 
 
 def get_soup_from_chapter_url(chapter_url: str) -> BeautifulSoup:
@@ -67,24 +68,57 @@ def get_soup_from_chapter_url(chapter_url: str) -> BeautifulSoup:
     return BeautifulSoup(response.text, 'html.parser')
 
 
+def create_directory_if_not_exists(directory: str):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
 def save_verses_in_json(filename: str, verses: list[Verse]):
+    create_directory_if_not_exists(os.path.dirname(filename))
     verses_json = json.dumps([verse.__dict__() for verse in verses])
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(verses_json)
 
 
-all_chapters = [Chapter(version_id, version_name, book_index, chapter_index) for book_index in range(
-    len(book_ids)) for chapter_index in range(book_chapters[book_ids[book_index]])]
+def get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version_id: str, version_name: str) -> list[Chapter]:
+    return [Chapter(
+        version_id=version_id,
+        version_name=version_name,
+        book_index=book_index,
+        chapter_index=chapter_index,
+        book_id=book_ids[book_index]
+    ) for book_index in range(len(book_ids)) for chapter_index in range(book_chapters[book_ids[book_index]])]
 
+
+def scrape_version_id(versions_url: str, version_name: str) -> str:
+    response = requests.get(versions_url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    version_a = soup.find('a', text=re.compile(f'\\({version_name}\\)'))
+    href = version_a['href']
+    search = re.search(r'/versions/(\d+)-', href)
+    if not isinstance(search, re.Match):
+        raise Exception('Version not found')
+    version_id: str = search.group(1)
+    return version_id
+
+
+try:
+    version_id = scrape_version_id(versions_url, version_name)
+except Exception as e:
+    print(f'Version {version_name} not found. Please insert the version ID manually.')
+    version_id = input('Version ID: ')
+
+print(f'Version ID: {version_id}')
+all_chapters = get_all_chapters(book_ids, book_chapters, version_id, version_name)
 print(f'{len(all_chapters)} chapters generated')
 
 verses: list[Verse] = []
 for chapter in all_chapters:
-    chapter_url = chapter.make_url()
+    chapter_url = make_chapter_url(chapter)
     print(f'Getting {chapter_url}')
     soup = get_soup_from_chapter_url(chapter_url)
 
-    for verse_number in range(1, 1000):
+    for verse_number in count(1):
         print(f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}')
         verse_span = soup.find(
             'span', attrs={'data-usfm': f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'})
@@ -96,4 +130,4 @@ for chapter in all_chapters:
         print(verse_text)
         verses.append(verse)
 
-save_verses_in_json(f'data/json/{version_name}.json', verses)
+save_verses_in_json(f'data/json/{language}/{version_name}.json', verses)
