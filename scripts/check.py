@@ -21,15 +21,15 @@ book_chapters = {
 }
 
 number_of_verses_from_version = {
-    'A21': 31103,
+    'A21': 31104,
     'ARA': 31104,  # ok
     'ARC': 31105,  # ok
     'BLT': 31102,
-    'NAA': 31102,
-    'NBV-P': 31102,
+    'NAA': 31105,
+    'NBV-P': 31105,
     'NTLH': 31103,  # ok
     'NVI': 31103,
-    'NVT': 31102,
+    'NVT': 31104,
     'TB': 31102,
     'VFL': 31102,
 }
