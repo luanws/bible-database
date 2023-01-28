@@ -24,7 +24,7 @@ number_of_verses_from_version = {
     'A21': 31104,
     'ARA': 31104,  # ok
     'ARC': 31105,  # ok
-    'BLT': 31102,
+    'BLT': 7959,
     'NAA': 31105,
     'NBV-P': 31105,
     'NTLH': 31103,  # ok
