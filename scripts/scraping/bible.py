@@ -93,6 +93,8 @@ def get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version
 
 
 def scrape_version_id(versions_url: str, version_name: str) -> str:
+    if not version_name:
+        raise Exception('Version name skipped')
     soup = get_soup_from_url(versions_url)
     version_a = soup.find('a', text=re.compile(f'\\({version_name}\\)'))
     href = version_a['href']
@@ -124,10 +126,16 @@ def scrape_chapter(chapter: Chapter, chapter_url: str) -> list[Verse]:
 
 try:
     version_id = scrape_version_id(versions_url, version_name)
+    print(f'Version ID: {version_id}')
 except Exception as e:
-    print(f'Version {version_name} not found. Please insert the version ID manually.')
-    version_id = input('Version ID: ')
-print(f'Version ID: {version_id}')
+    if version_name:
+        print(f'Version {version_name} not found. Please insert the version ID manually.')
+        version_id = input('Version ID: ')
+    else:
+        print('Version name skipped. Please insert the version ID manually.')
+        version_id = input('Version ID: ')
+        version_name = input('Version name: ')
+
 
 all_chapters = get_all_chapters(book_ids, book_chapters, version_id, version_name)
 print(f'{len(all_chapters)} chapters generated')
