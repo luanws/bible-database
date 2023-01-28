@@ -1,4 +1,4 @@
-# Bible-Database
+# Bible database
 
 This repository contains a script that scrapes various Bible versions from the internet and converts them into a JSON format. The goal of this project is to make it easy for developers to access the Bible in a machine-readable format for their applications.
 
