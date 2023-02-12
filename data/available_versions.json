@@ -1,0 +1,26 @@
+{
+    "hierarchy_json": {
+        "pt": [
+            "ARA",
+            "ARC",
+            "NTLH",
+            "NVI",
+            "NVT"
+        ]
+    },
+    "json": {
+        "pt": [
+            "A21",
+            "ARA",
+            "ARC",
+            "BLT",
+            "NAA",
+            "NBV-P",
+            "NTLH",
+            "NVI",
+            "NVT",
+            "TB",
+            "VFL"
+        ]
+    }
+}
