@@ -1,3 +1,4 @@
+import argparse
 import codecs
 import json
 import os
@@ -14,8 +15,16 @@ from src.utils.files import create_directory_if_not_exists
 
 base_url = "https://www.bible.com/bible"
 versions_url = "https://www.bible.com/versions"
-language = input("Language: ")  # Example: en
-version_name = input("Version name: ")  # Example: 'ARA'
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-l", "--language", help="Language", required=False)
+parser.add_argument("-v", "--version", help="Version name", required=False)
+parser.add_argument("-i", "--id", help="Version ID", required=False)
+args = parser.parse_args()
+
+language = args.language or input("Language: ")  # Example: en
+version_name = args.version or input("Version name: ")  # Example: 'ARA'
+
 book_chapters = {
     "GEN": 50,
     "EXO": 40,
@@ -172,7 +181,7 @@ except Exception as e:
         print(
             f"Version {version_name} not found. Please insert the version ID manually."
         )
-        version_id = input("Version ID: ")
+        version_id = args.id or input("Version ID: ")
     else:
         print("Version name skipped. Please insert the version ID manually.")
         version_id = input("Version ID: ")
