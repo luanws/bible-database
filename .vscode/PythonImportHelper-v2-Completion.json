@@ -1,0 +1,551 @@
+[
+    {
+        "label": "codecs",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "codecs",
+        "description": "codecs",
+        "detail": "codecs",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "TypedDict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TypedDict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "count",
+        "importPath": "itertools",
+        "description": "itertools",
+        "isExtraImport": true,
+        "detail": "itertools",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "colored",
+        "importPath": "termcolor",
+        "description": "termcolor",
+        "isExtraImport": true,
+        "detail": "termcolor",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "suppress",
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "isExtraImport": true,
+        "detail": "contextlib",
+        "documentation": {}
+    },
+    {
+        "label": "auto_menu",
+        "importPath": "pymenu",
+        "description": "pymenu",
+        "isExtraImport": true,
+        "detail": "pymenu",
+        "documentation": {}
+    },
+    {
+        "label": "VerseDict",
+        "kind": 6,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "class VerseDict(TypedDict):\n    book: str\n    chapter: int\n    verse: int\n    text: str\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef read_version_json(language: str, version_name: str) -> list[VerseDict]:\n    filename = f'data/json/{language}/{version_name}.json'",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "create_directory_if_not_exists",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef read_version_json(language: str, version_name: str) -> list[VerseDict]:\n    filename = f'data/json/{language}/{version_name}.json'\n    with open(filename, 'r', encoding='utf-8') as f:\n        return json.load(f)\ndef get_books_from_verse_dict(verse_dict_list: list[VerseDict]) -> list[str]:\n    books = []\n    for verse_dict in verse_dict_list:",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "read_version_json",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def read_version_json(language: str, version_name: str) -> list[VerseDict]:\n    filename = f'data/json/{language}/{version_name}.json'\n    with open(filename, 'r', encoding='utf-8') as f:\n        return json.load(f)\ndef get_books_from_verse_dict(verse_dict_list: list[VerseDict]) -> list[str]:\n    books = []\n    for verse_dict in verse_dict_list:\n        book = verse_dict['book']\n        if book not in books:\n            books.append(book)",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "get_books_from_verse_dict",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def get_books_from_verse_dict(verse_dict_list: list[VerseDict]) -> list[str]:\n    books = []\n    for verse_dict in verse_dict_list:\n        book = verse_dict['book']\n        if book not in books:\n            books.append(book)\n    return books\ndef get_chapters_from_book(verse_dict_list: list[VerseDict], book: str) -> list[VerseDict]:\n    return [verse_dict for verse_dict in verse_dict_list if verse_dict['book'] == book]\ndef get_verses_from_chapter(verse_dict_list_book: list[VerseDict], chapter: int) -> list[VerseDict]:",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "get_chapters_from_book",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def get_chapters_from_book(verse_dict_list: list[VerseDict], book: str) -> list[VerseDict]:\n    return [verse_dict for verse_dict in verse_dict_list if verse_dict['book'] == book]\ndef get_verses_from_chapter(verse_dict_list_book: list[VerseDict], chapter: int) -> list[VerseDict]:\n    return [verse_dict for verse_dict in verse_dict_list_book if verse_dict['chapter'] == chapter]\ndef get_verse_dict(verse_dict_list_chapter: list[VerseDict], verse: int) -> VerseDict:\n    return [verse_dict for verse_dict in verse_dict_list_chapter if verse_dict['verse'] == verse][0]\ndef save_hierarchy_in_json(filename: str, hierarchy_dict: list[list[list[str]]]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    hierarchy_json = json.dumps(hierarchy_dict)\n    with open(filename, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "get_verses_from_chapter",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def get_verses_from_chapter(verse_dict_list_book: list[VerseDict], chapter: int) -> list[VerseDict]:\n    return [verse_dict for verse_dict in verse_dict_list_book if verse_dict['chapter'] == chapter]\ndef get_verse_dict(verse_dict_list_chapter: list[VerseDict], verse: int) -> VerseDict:\n    return [verse_dict for verse_dict in verse_dict_list_chapter if verse_dict['verse'] == verse][0]\ndef save_hierarchy_in_json(filename: str, hierarchy_dict: list[list[list[str]]]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    hierarchy_json = json.dumps(hierarchy_dict)\n    with open(filename, 'w', encoding='utf-8') as f:\n        content = codecs.decode(hierarchy_json, 'unicode_escape')\n        f.write(content)",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "get_verse_dict",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def get_verse_dict(verse_dict_list_chapter: list[VerseDict], verse: int) -> VerseDict:\n    return [verse_dict for verse_dict in verse_dict_list_chapter if verse_dict['verse'] == verse][0]\ndef save_hierarchy_in_json(filename: str, hierarchy_dict: list[list[list[str]]]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    hierarchy_json = json.dumps(hierarchy_dict)\n    with open(filename, 'w', encoding='utf-8') as f:\n        content = codecs.decode(hierarchy_json, 'unicode_escape')\n        f.write(content)\nhierarchy: list[list[list[str]]] = []\nverse_dict_list = read_version_json(language, version_name)",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "save_hierarchy_in_json",
+        "kind": 2,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "def save_hierarchy_in_json(filename: str, hierarchy_dict: list[list[list[str]]]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    hierarchy_json = json.dumps(hierarchy_dict)\n    with open(filename, 'w', encoding='utf-8') as f:\n        content = codecs.decode(hierarchy_json, 'unicode_escape')\n        f.write(content)\nhierarchy: list[list[list[str]]] = []\nverse_dict_list = read_version_json(language, version_name)\nbooks = get_books_from_verse_dict(verse_dict_list)\nfor book_index, book in enumerate(books):",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "language",
+        "kind": 5,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "language = input('Language: ')  # Example: en\nversion_name = input('Version name: ')  # Example: 'ARA'\nclass VerseDict(TypedDict):\n    book: str\n    chapter: int\n    verse: int\n    text: str\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "version_name",
+        "kind": 5,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "version_name = input('Version name: ')  # Example: 'ARA'\nclass VerseDict(TypedDict):\n    book: str\n    chapter: int\n    verse: int\n    text: str\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef read_version_json(language: str, version_name: str) -> list[VerseDict]:",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "verse_dict_list",
+        "kind": 5,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "verse_dict_list = read_version_json(language, version_name)\nbooks = get_books_from_verse_dict(verse_dict_list)\nfor book_index, book in enumerate(books):\n    print(book)\n    verse_dict_list_book = get_chapters_from_book(verse_dict_list, book)\n    chapters = list(set([verse_dict['chapter'] for verse_dict in verse_dict_list_book]))\n    hierarchy.append([])\n    for chapter in chapters:\n        verse_dict_list_chapter = get_verses_from_chapter(verse_dict_list_book, chapter)\n        verse_text_list = [verse_dict['text'] for verse_dict in verse_dict_list_chapter]",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "books",
+        "kind": 5,
+        "importPath": "scripts.formatting.hierarchy",
+        "description": "scripts.formatting.hierarchy",
+        "peekOfCode": "books = get_books_from_verse_dict(verse_dict_list)\nfor book_index, book in enumerate(books):\n    print(book)\n    verse_dict_list_book = get_chapters_from_book(verse_dict_list, book)\n    chapters = list(set([verse_dict['chapter'] for verse_dict in verse_dict_list_book]))\n    hierarchy.append([])\n    for chapter in chapters:\n        verse_dict_list_chapter = get_verses_from_chapter(verse_dict_list_book, chapter)\n        verse_text_list = [verse_dict['text'] for verse_dict in verse_dict_list_chapter]\n        hierarchy[book_index].append(verse_text_list)",
+        "detail": "scripts.formatting.hierarchy",
+        "documentation": {}
+    },
+    {
+        "label": "Chapter",
+        "kind": 6,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "class Chapter:\n    def __init__(self, version_id: str, version_name: str, book_index: int, chapter_index: int, book_id: str):\n        self.version_id = version_id\n        self.version_name = version_name\n        self.book_index = book_index\n        self.chapter_index = chapter_index\n        self.book_id = book_id\n    @property\n    def chapter_number(self) -> int:\n        return self.chapter_index + 1",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "Verse",
+        "kind": 6,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "class Verse:\n    def __init__(self, chapter: Chapter, verse_number: int, verse_text: str):\n        self.chapter = chapter\n        self.verse_number = verse_number\n        self.verse_text = verse_text\n    def __dict__(self):\n        return {\n            'book': self.chapter.book_id,\n            'chapter': self.chapter.chapter_number,\n            'verse': self.verse_number,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "get_book_id_from_chapter",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def get_book_id_from_chapter(chapter: Chapter) -> str:\n    return book_ids[chapter.book_index]\ndef make_chapter_url(chapter: Chapter) -> str:\n    book_id = get_book_id_from_chapter(chapter)\n    return f'{base_url}/{chapter.version_id}/{book_id}.{chapter.chapter_number}.{chapter.version_name}'\ndef get_soup_from_url(url: str) -> BeautifulSoup:\n    response = requests.get(url)\n    return BeautifulSoup(response.text, 'html.parser')\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "make_chapter_url",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def make_chapter_url(chapter: Chapter) -> str:\n    book_id = get_book_id_from_chapter(chapter)\n    return f'{base_url}/{chapter.version_id}/{book_id}.{chapter.chapter_number}.{chapter.version_name}'\ndef get_soup_from_url(url: str) -> BeautifulSoup:\n    response = requests.get(url)\n    return BeautifulSoup(response.text, 'html.parser')\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef save_verses_in_json(filename: str, verses: list[Verse]):",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "get_soup_from_url",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def get_soup_from_url(url: str) -> BeautifulSoup:\n    response = requests.get(url)\n    return BeautifulSoup(response.text, 'html.parser')\ndef create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef save_verses_in_json(filename: str, verses: list[Verse]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    verses_json = json.dumps([verse.__dict__() for verse in verses])\n    with open(filename, 'w', encoding='utf-8') as f:",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "create_directory_if_not_exists",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def create_directory_if_not_exists(directory: str):\n    if not os.path.exists(directory):\n        os.makedirs(directory)\ndef save_verses_in_json(filename: str, verses: list[Verse]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    verses_json = json.dumps([verse.__dict__() for verse in verses])\n    with open(filename, 'w', encoding='utf-8') as f:\n        content = codecs.decode(verses_json, 'unicode_escape')\n        f.write(content)\ndef get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version_id: str, version_name: str) -> list[Chapter]:",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "save_verses_in_json",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def save_verses_in_json(filename: str, verses: list[Verse]):\n    create_directory_if_not_exists(os.path.dirname(filename))\n    verses_json = json.dumps([verse.__dict__() for verse in verses])\n    with open(filename, 'w', encoding='utf-8') as f:\n        content = codecs.decode(verses_json, 'unicode_escape')\n        f.write(content)\ndef get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version_id: str, version_name: str) -> list[Chapter]:\n    return [Chapter(\n        version_id=version_id,\n        version_name=version_name,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_chapters",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def get_all_chapters(book_ids: list[str], book_chapters: dict[str, int], version_id: str, version_name: str) -> list[Chapter]:\n    return [Chapter(\n        version_id=version_id,\n        version_name=version_name,\n        book_index=book_index,\n        chapter_index=chapter_index,\n        book_id=book_ids[book_index]\n    ) for book_index in range(len(book_ids)) for chapter_index in range(book_chapters[book_ids[book_index]])]\ndef scrape_version_id(versions_url: str, version_name: str) -> str:\n    if not version_name:",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "scrape_version_id",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def scrape_version_id(versions_url: str, version_name: str) -> str:\n    if not version_name:\n        raise Exception('Version name skipped')\n    soup = get_soup_from_url(versions_url)\n    version_a = soup.find('a', text=re.compile(f'\\\\({version_name}\\\\)'))\n    href = version_a['href']\n    search = re.search(r'/versions/(\\d+)-', href)\n    if not isinstance(search, re.Match):\n        raise Exception('Version not found')\n    version_id: str = search.group(1)",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "scrape_chapter",
+        "kind": 2,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "def scrape_chapter(chapter: Chapter, chapter_url: str) -> list[Verse]:\n    soup = get_soup_from_url(chapter_url)\n    verses: list[Verse] = []\n    for verse_number in count(1):\n        verse_reference = f'{chapter.book_id}.{chapter.chapter_number}.{verse_number}'\n        verse_spans = soup.find_all('span', attrs={'data-usfm': verse_reference})\n        if not verse_spans:\n            break\n        partial_verse_texts: list[str] = []\n        for verse_span in verse_spans:",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "base_url",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "base_url = 'https://www.bible.com/bible'\nversions_url = 'https://www.bible.com/versions'\nlanguage = input('Language: ')  # Example: en\nversion_name = input('Version name: ')  # Example: 'ARA'\nbook_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "versions_url",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "versions_url = 'https://www.bible.com/versions'\nlanguage = input('Language: ')  # Example: en\nversion_name = input('Version name: ')  # Example: 'ARA'\nbook_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "language",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "language = input('Language: ')  # Example: en\nversion_name = input('Version name: ')  # Example: 'ARA'\nbook_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,\n    'HAG': 2, 'ZEC': 14, 'MAL': 4, 'MAT': 28, 'MRK': 16, 'LUK': 24,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "version_name",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "version_name = input('Version name: ')  # Example: 'ARA'\nbook_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,\n    'HAG': 2, 'ZEC': 14, 'MAL': 4, 'MAT': 28, 'MRK': 16, 'LUK': 24,\n    'JHN': 21, 'ACT': 28, 'ROM': 16, '1CO': 16, '2CO': 13, 'GAL': 6,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "book_chapters",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "book_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,\n    'HAG': 2, 'ZEC': 14, 'MAL': 4, 'MAT': 28, 'MRK': 16, 'LUK': 24,\n    'JHN': 21, 'ACT': 28, 'ROM': 16, '1CO': 16, '2CO': 13, 'GAL': 6,\n    'EPH': 6, 'PHP': 4, 'COL': 4, '1TH': 5, '2TH': 3, '1TI': 6,",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "book_ids",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "book_ids = list(book_chapters.keys())\nclass Chapter:\n    def __init__(self, version_id: str, version_name: str, book_index: int, chapter_index: int, book_id: str):\n        self.version_id = version_id\n        self.version_name = version_name\n        self.book_index = book_index\n        self.chapter_index = chapter_index\n        self.book_id = book_id\n    @property\n    def chapter_number(self) -> int:",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "all_chapters",
+        "kind": 5,
+        "importPath": "scripts.scraping.bible",
+        "description": "scripts.scraping.bible",
+        "peekOfCode": "all_chapters = get_all_chapters(book_ids, book_chapters, version_id, version_name)\nprint(f'{len(all_chapters)} chapters generated')\nverses: list[Verse] = []\nfor chapter in all_chapters:\n    chapter_url = make_chapter_url(chapter)\n    print(f'Getting {chapter_url}')\n    chapter_verses = scrape_chapter(chapter, chapter_url)\n    print(f'Scraped {chapter.book_id} {chapter.chapter_number}:1-{len(chapter_verses)}')\n    verses.extend(chapter_verses)\nsave_verses_in_json(f'data/json/{language}/{version_name}.json', verses)",
+        "detail": "scripts.scraping.bible",
+        "documentation": {}
+    },
+    {
+        "label": "Verse",
+        "kind": 6,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "class Verse(TypedDict):\n    book: str\n    chapter: int\n    verse: int\n    text: str\ndef get_all_versions_from_language(language: str) -> list[str]:\n    versions = []\n    for file in os.listdir(f'data/json/{language}'):\n        if file.endswith('.json'):\n            versions.append(file[:-5])",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_versions_from_language",
+        "kind": 2,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "def get_all_versions_from_language(language: str) -> list[str]:\n    versions = []\n    for file in os.listdir(f'data/json/{language}'):\n        if file.endswith('.json'):\n            versions.append(file[:-5])\n    return versions\ndef get_verses_from_json(file_path: str) -> list[Verse]:\n    with open(file_path, 'r', encoding='utf-8') as f:\n        return json.load(f)\ndef check_number_of_verses(verses: list[Verse], version_name: str):",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "get_verses_from_json",
+        "kind": 2,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "def get_verses_from_json(file_path: str) -> list[Verse]:\n    with open(file_path, 'r', encoding='utf-8') as f:\n        return json.load(f)\ndef check_number_of_verses(verses: list[Verse], version_name: str):\n    verse_count = len(verses)\n    correct_verse_count = number_of_verses_from_version[version_name]\n    if verse_count == number_of_verses_from_version[version_name]:\n        version_name_colored = colored(version_name, \"cyan\")\n        verse_count_colored = colored(str(verse_count), \"green\")\n        print(f'{version_name_colored} has {verse_count_colored} verses')",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "check_number_of_verses",
+        "kind": 2,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "def check_number_of_verses(verses: list[Verse], version_name: str):\n    verse_count = len(verses)\n    correct_verse_count = number_of_verses_from_version[version_name]\n    if verse_count == number_of_verses_from_version[version_name]:\n        version_name_colored = colored(version_name, \"cyan\")\n        verse_count_colored = colored(str(verse_count), \"green\")\n        print(f'{version_name_colored} has {verse_count_colored} verses')\n    else:\n        version_name_colored = colored(version_name, \"cyan\")\n        verse_count_colored = colored(str(verse_count), \"red\")",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "language",
+        "kind": 5,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "language = input('Language: ')  # Example: en\nbook_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,\n    'HAG': 2, 'ZEC': 14, 'MAL': 4, 'MAT': 28, 'MRK': 16, 'LUK': 24,\n    'JHN': 21, 'ACT': 28, 'ROM': 16, '1CO': 16, '2CO': 13, 'GAL': 6,",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "book_chapters",
+        "kind": 5,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "book_chapters = {\n    'GEN': 50, 'EXO': 40, 'LEV': 27, 'NUM': 36, 'DEU': 34, 'JOS': 24,\n    'JDG': 21, 'RUT': 4, '1SA': 31, '2SA': 24, '1KI': 22, '2KI': 25,\n    '1CH': 29, '2CH': 36, 'EZR': 10, 'NEH': 13, 'EST': 10, 'JOB': 42,\n    'PSA': 150, 'PRO': 31, 'ECC': 12, 'SNG': 8, 'ISA': 66, 'JER': 52,\n    'LAM': 5, 'EZK': 48, 'DAN': 12, 'HOS': 14, 'JOL': 3, 'AMO': 9,\n    'OBA': 1, 'JON': 4, 'MIC': 7, 'NAM': 3, 'HAB': 3, 'ZEP': 3,\n    'HAG': 2, 'ZEC': 14, 'MAL': 4, 'MAT': 28, 'MRK': 16, 'LUK': 24,\n    'JHN': 21, 'ACT': 28, 'ROM': 16, '1CO': 16, '2CO': 13, 'GAL': 6,\n    'EPH': 6, 'PHP': 4, 'COL': 4, '1TH': 5, '2TH': 3, '1TI': 6,",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "number_of_verses_from_version",
+        "kind": 5,
+        "importPath": "scripts.check",
+        "description": "scripts.check",
+        "peekOfCode": "number_of_verses_from_version = {\n    'A21': 31104,\n    'ARA': 31104,  # ok\n    'ARC': 31105,  # ok\n    'BLT': 7959,\n    'NAA': 31105,\n    'NBV-P': 31105,\n    'NTLH': 31103,  # ok\n    'NVI': 31103,\n    'NVT': 31104,",
+        "detail": "scripts.check",
+        "documentation": {}
+    },
+    {
+        "label": "get_installed_packages",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def get_installed_packages() -> List[str]:\n    return subprocess.check_output(['pip', 'freeze']).decode('utf-8').splitlines()\ndef install_package(package: str):\n    with suppress(Exception):\n        subprocess.call(['pip', 'install', package])\ndef install_packages(packages: List[str]):\n    for package in packages:\n        install_package(package)\ndef get_packages(filename: str):\n    with open(filename, 'rb') as file:",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "install_package",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def install_package(package: str):\n    with suppress(Exception):\n        subprocess.call(['pip', 'install', package])\ndef install_packages(packages: List[str]):\n    for package in packages:\n        install_package(package)\ndef get_packages(filename: str):\n    with open(filename, 'rb') as file:\n        content = file.read().decode('utf-16')\n        return content.splitlines()",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "install_packages",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def install_packages(packages: List[str]):\n    for package in packages:\n        install_package(package)\ndef get_packages(filename: str):\n    with open(filename, 'rb') as file:\n        content = file.read().decode('utf-16')\n        return content.splitlines()\ndef save_packages(filename: str, packages: List[str]):\n    with open(filename, 'w') as file:\n        file.write('\\n'.join(packages))",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "get_packages",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def get_packages(filename: str):\n    with open(filename, 'rb') as file:\n        content = file.read().decode('utf-16')\n        return content.splitlines()\ndef save_packages(filename: str, packages: List[str]):\n    with open(filename, 'w') as file:\n        file.write('\\n'.join(packages))\ndef save_log(filename: str, packages_dict: Dict[str, List[str]]):\n    with open(filename, 'w') as file:\n        for title, packages in packages_dict.items():",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "save_packages",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def save_packages(filename: str, packages: List[str]):\n    with open(filename, 'w') as file:\n        file.write('\\n'.join(packages))\ndef save_log(filename: str, packages_dict: Dict[str, List[str]]):\n    with open(filename, 'w') as file:\n        for title, packages in packages_dict.items():\n            if len(packages) == 0:\n                continue\n            file.write(f'{title}\\n')\n            file.write('\\n'.join(packages))",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "save_log",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def save_log(filename: str, packages_dict: Dict[str, List[str]]):\n    with open(filename, 'w') as file:\n        for title, packages in packages_dict.items():\n            if len(packages) == 0:\n                continue\n            file.write(f'{title}\\n')\n            file.write('\\n'.join(packages))\n            file.write('\\n\\n')\ndef get_flags_from_args(args: List[str]) -> Dict[str, str]:\n    flags: Dict[str, str] = {}",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "get_flags_from_args",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def get_flags_from_args(args: List[str]) -> Dict[str, str]:\n    flags: Dict[str, str] = {}\n    for arg in args:\n        if arg.startswith('-'):\n            if '=' in arg:\n                key, value = arg.split('=')\n                flags[key] = value\n            else:\n                flags[arg] = ''\n            args.remove(arg)",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "only_name",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def only_name(package: str) -> str:\n    return package.split('==')[0]\ndef only_names(packages: List[str]) -> List[str]:\n    return [only_name(package) for package in packages]\nif __name__ == '__main__':\n    args = sys.argv[1:]\n    flags = get_flags_from_args(args)\n    filename = args[0]\n    packages = get_packages(filename)\n    if '-lo' not in flags.keys():",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "only_names",
+        "kind": 2,
+        "importPath": "install",
+        "description": "install",
+        "peekOfCode": "def only_names(packages: List[str]) -> List[str]:\n    return [only_name(package) for package in packages]\nif __name__ == '__main__':\n    args = sys.argv[1:]\n    flags = get_flags_from_args(args)\n    filename = args[0]\n    packages = get_packages(filename)\n    if '-lo' not in flags.keys():\n        install_packages(packages)\n    installed_packages = get_installed_packages()",
+        "detail": "install",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "menu = auto_menu.create_menu_from_directory('scripts')\nmenu.add_option('exit', exit)\nmenu.show()",
+        "detail": "main",
+        "documentation": {}
+    }
+]
