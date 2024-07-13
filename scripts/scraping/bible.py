@@ -8,6 +8,10 @@ from itertools import count
 import requests
 from bs4 import BeautifulSoup
 
+from src.models.chapter import Chapter
+from src.models.verse import Verse
+from src.utils.files import create_directory_if_not_exists
+
 base_url = "https://www.bible.com/bible"
 versions_url = "https://www.bible.com/versions"
 language = input("Language: ")  # Example: en
@@ -83,41 +87,6 @@ book_chapters = {
 book_ids = list(book_chapters.keys())
 
 
-class Chapter:
-    def __init__(
-        self,
-        version_id: str,
-        version_name: str,
-        book_index: int,
-        chapter_index: int,
-        book_id: str,
-    ):
-        self.version_id = version_id
-        self.version_name = version_name
-        self.book_index = book_index
-        self.chapter_index = chapter_index
-        self.book_id = book_id
-
-    @property
-    def chapter_number(self) -> int:
-        return self.chapter_index + 1
-
-
-class Verse:
-    def __init__(self, chapter: Chapter, verse_number: int, verse_text: str):
-        self.chapter = chapter
-        self.verse_number = verse_number
-        self.verse_text = verse_text
-
-    def __dict__(self):
-        return {
-            "book": self.chapter.book_id,
-            "chapter": self.chapter.chapter_number,
-            "verse": self.verse_number,
-            "text": self.verse_text,
-        }
-
-
 def get_book_id_from_chapter(chapter: Chapter) -> str:
     return book_ids[chapter.book_index]
 
@@ -132,14 +101,9 @@ def get_soup_from_url(url: str) -> BeautifulSoup:
     return BeautifulSoup(response.text, "html.parser")
 
 
-def create_directory_if_not_exists(directory: str):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-
 def save_verses_in_json(filename: str, verses: list[Verse]):
     create_directory_if_not_exists(os.path.dirname(filename))
-    verses_json = json.dumps([verse.__dict__() for verse in verses])
+    verses_json = json.dumps([verse.__dict__() for verse in verses], indent=4)
     with open(filename, "w", encoding="utf-8") as f:
         content = codecs.decode(verses_json, "unicode_escape")
         f.write(content)
