@@ -103,7 +103,7 @@ def get_soup_from_url(url: str) -> BeautifulSoup:
 
 def save_verses_in_json(filename: str, verses: list[Verse]):
     create_directory_if_not_exists(os.path.dirname(filename))
-    verses_json = json.dumps([verse.__dict__() for verse in verses], indent=4)
+    verses_json = json.dumps([verse.__dict__() for verse in verses])
     with open(filename, "w", encoding="utf-8") as f:
         content = codecs.decode(verses_json, "unicode_escape")
         f.write(content)
@@ -132,7 +132,8 @@ def scrape_version_id(versions_url: str, version_name: str) -> str:
     if not version_name:
         raise Exception("Version name skipped")
     soup = get_soup_from_url(versions_url)
-    version_a = soup.find("a", text=re.compile(f"\\({version_name}\\)"))
+    element = soup.find(text=re.compile(f"\\({version_name}\\)"))
+    version_a = element.find_parent("a")
     href = version_a["href"]
     search = re.search(r"/versions/(\d+)-", href)
     if not isinstance(search, re.Match):
@@ -151,8 +152,9 @@ def scrape_chapter(chapter: Chapter, chapter_url: str) -> list[Verse]:
             break
         partial_verse_texts: list[str] = []
         for verse_span in verse_spans:
+            content_regex = re.compile(r".*ChapterContent_content.*")
             content_verse_spans = verse_span.find_all(
-                "span", attrs={"class": "content"}
+                "span", attrs={"class": content_regex}
             )
             partial_verse_text = "".join([v.text for v in content_verse_spans])
             partial_verse_texts.append(partial_verse_text)
