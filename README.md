@@ -8,7 +8,7 @@ To use the script, you will need Python 3 and the dependencies listed in the `re
 
 ## Available Bible versions
 
-Currently, the script is able to scrape most versions of the Bible, but some versions in English and Portuguese are already available in the JSON format in the data folder. The following versions are available for download:
+Currently, the script is capable of scraping most versions of the Bible, but some versions are already available in JSON format in the data folder. The following versions are available for download:
 
 ### en:
 [AMP](https://github.com/luanws/bible-database/raw/main/data/json/en/AMP.json),
