@@ -92,6 +92,14 @@ Currently, the script is able to scrape most versions of the Bible, but some ver
 - [TB](https://github.com/luanws/bible-database/raw/main/data/json/pt/TB.json)
 - [VFL](https://github.com/luanws/bible-database/raw/main/data/json/pt/VFL.json)
 
+### es-ES:
+- [RV2020](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/RV2020.json)
+- [DHHE](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/DHHE.json)
+- [BLP](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/BLP.json)
+- [DHHED](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/DHHED.json)
+- [NVI](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/NVI.json)
+- [BTI](https://github.com/luanws/bible-database/raw/main/data/json/es-ES/BTI.json)
+
 ## Limitations
 
 Please note that this script is for personal use only, and should not be used for commercial purposes. Additionally, certain books or chapters may be missing from the scraped data.
